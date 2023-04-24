@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diccionario</title>
+    <style>
+        body {
+          background-color: #222;
+          color: #fff;
+        }
+        form {
+          margin: 20px;
+          padding: 20px;
+          border: 1px solid #444;
+          border-radius: 5px;
+          font-size: 16px;
+          background-color: #333;
+        }
+
+        label {
+          display: inline-block;
+          margin-bottom: 10px;
+          font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+          padding: 10px;
+          font-size: 16px;
+          border-radius: 5px;
+          border: 1px solid #444;
+          background-color: #555;
+          color: #fff;
+        }
+
+        input[type="submit"] {
+          background-color: #4CAF50;
+          color: #fff;
+          cursor: pointer;
+          transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+          background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <h1>Diccionario</h1>
+
+    <h2>Agregar palabra</h2>
+    <form action="{{ url_for('agregar_palabra') }}" method="post">
+        <label for="palabra">Palabra:</label>
+        <input type="text" id="palabra" name="palabra"><br><br>
+        <label for="definicion">Definición:</label>
+        <input type="text" id="definicion" name="definicion"><br><br>
+        <input type="submit" value="Agregar">
+    </form>
+
+    <h2>Editar palabra</h2>
+    <form action="{{ url_for('editar_palabra') }}" method="post">
+        <label for="palabra">Palabra:</label>
+        <input type="text" id="palabra" name="palabra"><br><br>
+        <label for="definicion">Definición:</label>
+        <input type="text" id="definicion" name="definicion"><br><br>
+        <input type="submit" value="Editar">
+    </form>
+
+    <h2>Eliminar palabra</h2>
+    <form action="{{ url_for('eliminar_palabra') }}" method="post">
+        <label for="palabra">Palabra:</label>
+        <input type="text" id="palabra" name="palabra"><br><br>
+        <input type="submit" value="Eliminar">
+    </form>
+
+    <h2>Lista de palabras</h2>
+    <ul>
+        {% for palabra, definicion in db.hgetall('palabras').items() %}
+        <li>{{ palabra }} - {{ definicion }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
